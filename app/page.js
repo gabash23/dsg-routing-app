@@ -55,7 +55,16 @@ export default function Home() {
   }, [status, session, onboardingLoaded, router]);
 
   const resetOnboarding = () => {
+    // Clear onboarding completion flag
+    localStorage.removeItem('dsg-onboarding-completed');
     router.push('/onboarding');
+  };
+
+  const resetHandoff = () => {
+    // Clear handoff completion flag
+    localStorage.removeItem('dsg-handoff-completed');
+    // Reset to shipment view
+    setCurrentView('shipment');
   };
 
   useEffect(() => {
@@ -128,6 +137,7 @@ export default function Home() {
         currentView={currentView}
         onViewChange={setCurrentView}
         onRestartOnboarding={resetOnboarding}
+        onResetHandoff={resetHandoff}
       />
 
       {/* Main Content */}
