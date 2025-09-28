@@ -123,9 +123,7 @@ export default function Onboarding({
       }
     } else {
       // Complete onboarding
-      // For testing: don't save to localStorage
-      // TODO: Uncomment for production
-      // localStorage.setItem('dsg-onboarding-completed', 'true');
+      localStorage.setItem('dsg-onboarding-completed', 'true');
       onClose();
     }
   };
@@ -141,9 +139,7 @@ export default function Onboarding({
   };
 
   const handleSkip = () => {
-    // For testing: don't save to localStorage
-    // TODO: Uncomment for production
-    // localStorage.setItem('dsg-onboarding-completed', 'true');
+    localStorage.setItem('dsg-onboarding-completed', 'true');
     onClose();
   };
 

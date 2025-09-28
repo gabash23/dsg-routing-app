@@ -21,11 +21,6 @@ export default function SuccessPage() {
     router.push('/');
   };
 
-  const handleViewSummary = () => {
-    // Could implement a summary view or PDF generation
-    console.log('View summary:', handoffData);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
@@ -103,18 +98,12 @@ export default function SuccessPage() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <button
               onClick={handleNewShipment}
               className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"
             >
               Start New Shipment
-            </button>
-            <button
-              onClick={handleViewSummary}
-              className="px-8 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
-            >
-              View Summary
             </button>
           </div>
 

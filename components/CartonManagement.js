@@ -786,12 +786,12 @@ export default function CartonManagement() {
                 Conveyable Cartons (9-48&quot;L × 6-30&quot;W × 3-30&quot;H,
                 3-50 lb)
               </h3>
-              <div className="border-2 border-gray-300 p-4 rounded-lg bg-gray-50">
-                <div className="relative w-40 h-16 mx-auto">
+              <div className="border-2 border-gray-300 p-2 rounded-lg bg-gray-50">
+                <div className="relative w-full min-h-64">
                   <img
                     src="/images/conveyable.png"
                     alt="Conveyable carton label placement"
-                    className="w-full h-full object-contain"
+                    className="w-full h-64 object-contain"
                   />
                 </div>
               </div>
@@ -804,12 +804,12 @@ export default function CartonManagement() {
               <h3 className="font-medium text-gray-900 mb-2">
                 Non-conveyable Cartons (Outside conveyable range)
               </h3>
-              <div className="border-2 border-gray-300 p-4 rounded-lg bg-gray-50">
-                <div className="relative w-40 h-16 mx-auto">
+              <div className="border-2 border-gray-300 p-2 rounded-lg bg-gray-50">
+                <div className="relative w-full min-h-64">
                   <img
                     src="/images/non-conveyable.png"
                     alt="Non-conveyable carton label placement"
-                    className="w-full h-full object-contain"
+                    className="w-full h-64 object-contain"
                   />
                 </div>
               </div>

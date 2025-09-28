@@ -253,24 +253,14 @@ export default function ReviewHandoff() {
   };
 
   const handleFinalHandoff = () => {
-    // For demo purposes, let's make this work even with minimal data
-    // In production, you'd want proper validation
-    const hasMinimalData =
-      handoffData.driverInfo.name || handoffData.tmsVerification.tmsId;
+    // Store handoff data immediately for the success page
+    sessionStorage.setItem('handoffData', JSON.stringify(handoffData));
 
-    if (hasMinimalData || validateStage('driverHandoff')) {
-      // Store handoff data in sessionStorage for the success page
-      sessionStorage.setItem('handoffData', JSON.stringify(handoffData));
+    // Mark handoff as completed in localStorage
+    localStorage.setItem('dsg-handoff-completed', 'true');
 
-      // Mark handoff as completed in localStorage
-      localStorage.setItem('dsg-handoff-completed', 'true');
-
-      // Redirect to success page
-      router.push('/success');
-    } else {
-      // Show validation errors if no minimal data
-      validateStage('driverHandoff');
-    }
+    // Redirect to success page immediately
+    router.push('/success');
   };
 
   const getStageStatus = (stageName) => {
@@ -803,47 +793,12 @@ export default function ReviewHandoff() {
                 />
               </div>
             </div>
-            <div className="flex gap-4">
-              <button
-                onClick={handleFinalHandoff}
-                className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
-              >
-                Complete Handoff
-              </button>
-              <button
-                onClick={() => {
-                  // Test success page with sample data
-                  const testData = {
-                    ...handoffData,
-                    driverInfo: {
-                      name: 'John Smith',
-                      company: 'ABC Transport',
-                      license: 'DL123456',
-                      phone: '555-123-4567',
-                    },
-                    tmsVerification: {
-                      tmsId: 'CS12345',
-                      driverVerified: true,
-                      correctFormat: true,
-                    },
-                    sealVerification: {
-                      sealNumber: 'SEAL789',
-                      bolSealMatch: true,
-                      sealIntact: true,
-                    },
-                    handoffNotes: 'Test handoff completed successfully',
-                  };
-                  sessionStorage.setItem(
-                    'handoffData',
-                    JSON.stringify(testData)
-                  );
-                  router.push('/success');
-                }}
-                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Test Success Page
-              </button>
-            </div>
+            <button
+              onClick={handleFinalHandoff}
+              className="px-8 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg"
+            >
+              Complete Handoff
+            </button>
           </div>
         )}
       </div>
