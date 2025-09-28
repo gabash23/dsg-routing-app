@@ -38,31 +38,31 @@ export default function Home() {
       {/* User Profile Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-3 md:py-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-lg md:text-2xl font-bold text-gray-900">
                 DSG Routing App
               </h1>
-              <p className="text-sm text-gray-700">
+              <p className="text-xs md:text-sm text-gray-700">
                 Shipment Management System
               </p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="hidden sm:flex items-center gap-2">
                 {session.user?.image && (
                   <img
                     src={session.user.image}
                     alt={session.user.name}
-                    className="w-8 h-8 rounded-full"
+                    className="w-6 h-6 md:w-8 md:h-8 rounded-full"
                   />
                 )}
-                <span className="text-sm text-gray-700">
+                <span className="text-xs md:text-sm text-gray-700">
                   Welcome, {session.user?.name}
                 </span>
               </div>
               <button
                 onClick={() => signOut({ callbackUrl: '/auth/signin' })}
-                className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                className="px-2 py-1 md:px-3 text-xs md:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
               >
                 Sign Out
               </button>
@@ -75,7 +75,7 @@ export default function Home() {
       <Navigation currentView={currentView} onViewChange={setCurrentView} />
 
       {/* Main Content */}
-      <main className="py-8">
+      <main className="py-4 md:py-8">
         {currentView === 'shipment' && <ShipmentSetup />}
         {currentView === 'cartons' && <CartonManagement />}
         {currentView === 'pallets' && <PalletManagement />}

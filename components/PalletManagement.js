@@ -229,11 +229,11 @@ export default function PalletManagement() {
                       <h3 className="font-medium text-gray-900">
                         {carton.cartonId}
                       </h3>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-700">
                         {carton.dimensions.length}" × {carton.dimensions.width}"
                         × {carton.dimensions.height}"
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-700">
                         Weight: {carton.weight} lbs
                       </p>
                     </div>
@@ -260,7 +260,7 @@ export default function PalletManagement() {
             <h3 className="font-medium text-gray-900 mb-2">
               Pallet Statistics
             </h3>
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
               <div>Cartons: {palletStats.cartonCount}</div>
               <div>Total Weight: {palletStats.totalWeight} lbs</div>
               <div>Max Height: {palletStats.maxHeight}"</div>
@@ -274,7 +274,7 @@ export default function PalletManagement() {
           <div className="mb-4">
             <h3 className="font-medium text-gray-900 mb-2">Selected Cartons</h3>
             {currentPallet.cartons.length === 0 ? (
-              <p className="text-gray-600 text-sm">No cartons selected</p>
+              <p className="text-gray-700 text-sm">No cartons selected</p>
             ) : (
               <div className="space-y-2">
                 {currentPallet.cartons.map((carton) => (
@@ -282,7 +282,7 @@ export default function PalletManagement() {
                     key={carton.id}
                     className="flex justify-between items-center p-2 bg-gray-50 rounded"
                   >
-                    <span className="text-sm">
+                    <span className="text-sm text-gray-900">
                       {carton.cartonId} ({carton.weight} lbs)
                     </span>
                     <button
@@ -515,22 +515,12 @@ export default function PalletManagement() {
             <div>
               <h3 className="font-medium text-gray-900 mb-2">Visual Guide</h3>
               <div className="border-2 border-gray-300 p-4 rounded-lg bg-gray-50">
-                <div className="relative w-full h-32 mx-auto">
-                  {/* Trailer visualization */}
-                  <div className="w-full h-full border-2 border-gray-400 rounded bg-blue-50">
-                    <div className="absolute bottom-2 left-2 right-2 h-8 bg-gray-600 rounded text-white text-xs flex items-center justify-center">
-                      Heavy Items
-                    </div>
-                    <div className="absolute bottom-12 left-2 right-2 h-6 bg-gray-400 rounded text-white text-xs flex items-center justify-center">
-                      Medium Items
-                    </div>
-                    <div className="absolute bottom-20 left-2 right-2 h-4 bg-gray-300 rounded text-white text-xs flex items-center justify-center">
-                      Light Items
-                    </div>
-                    <div className="absolute top-2 right-2 text-xs text-gray-600">
-                      &lt;5 ft height limit
-                    </div>
-                  </div>
+                <div className="relative w-full mx-auto">
+                  <img
+                    src="/images/trailer-loading.png"
+                    alt="Trailer Loading Requirements - Weight distribution, height restrictions, carton orientation, and load restraints"
+                    className="w-full h-auto rounded-lg shadow-sm"
+                  />
                 </div>
               </div>
             </div>
@@ -556,7 +546,7 @@ export default function PalletManagement() {
                       : '⚠ Review Needed'}
                   </span>
                 </div>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-gray-700">
                   Follow DSG routing guidelines for safe and efficient trailer
                   loading
                 </p>
@@ -573,7 +563,7 @@ export default function PalletManagement() {
         </h2>
 
         {pallets.length === 0 ? (
-          <p className="text-gray-600 text-center py-8">
+          <p className="text-gray-700 text-center py-8">
             No pallets assembled yet
           </p>
         ) : (
@@ -585,12 +575,12 @@ export default function PalletManagement() {
                     <h3 className="font-medium text-gray-900">
                       Pallet #{pallet.id}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-700">
                       {pallet.cartons.length} cartons •{' '}
                       {pallet.stats.totalWeight} lbs • {pallet.stats.maxHeight}"
                       height
                     </p>
-                    <p className="text-xs text-gray-600">
+                    <p className="text-xs text-gray-700">
                       Assembled: {new Date(pallet.assembledAt).toLocaleString()}
                     </p>
                   </div>
