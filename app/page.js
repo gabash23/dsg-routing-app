@@ -9,6 +9,7 @@ import PalletManagement from '../components/PalletManagement';
 import PaperworkManagement from '../components/PaperworkManagement';
 import ReviewHandoff from '../components/ReviewHandoff';
 import Navigation from '../components/Navigation';
+import PWAInstallPrompt from '../components/PWAInstallPrompt';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -81,6 +82,9 @@ export default function Home() {
         {currentView === 'paperwork' && <PaperworkManagement />}
         {currentView === 'handoff' && <ReviewHandoff />}
       </main>
+
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
     </div>
   );
 }

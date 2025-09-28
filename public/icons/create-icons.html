@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create PWA Icons</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .icon-container { margin: 20px 0; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        button { padding: 10px 20px; margin: 5px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .download-section { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>DSG Routing App - PWA Icon Generator</h1>
+    <p>Click "Generate All Icons" then download each one to the /icons/ folder.</p>
+    
+    <button onclick="generateAllIcons()">Generate All Icons</button>
+    
+    <div id="icons"></div>
+
+    <script>
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Background with gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#2563eb');
+            gradient.addColorStop(1, '#1d4ed8');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Add rounded corners
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.1);
+            ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+
+            // Truck icon
+            const truckSize = size * 0.6;
+            const truckX = (size - truckSize) / 2;
+            const truckY = (size - truckSize) / 2;
+
+            ctx.fillStyle = 'white';
+            
+            // Truck body
+            ctx.fillRect(truckX + truckSize * 0.1, truckY + truckSize * 0.4, truckSize * 0.6, truckSize * 0.3);
+            
+            // Truck cab
+            ctx.fillRect(truckX + truckSize * 0.7, truckY + truckSize * 0.5, truckSize * 0.2, truckSize * 0.2);
+            
+            // Wheels
+            ctx.fillStyle = '#374151';
+            ctx.beginPath();
+            ctx.arc(truckX + truckSize * 0.2, truckY + truckSize * 0.8, truckSize * 0.08, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(truckX + truckSize * 0.7, truckY + truckSize * 0.8, truckSize * 0.08, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // DSG text
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.12}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('DSG', size/2, size * 0.25);
+
+            return canvas;
+        }
+
+        function generateAllIcons() {
+            const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+            const container = document.getElementById('icons');
+            container.innerHTML = '';
+
+            sizes.forEach(size => {
+                const canvas = createIcon(size);
+                
+                const div = document.createElement('div');
+                div.className = 'icon-container';
+                div.innerHTML = `
+                    <h3>${size}x${size}</h3>
+                    <canvas width="${size}" height="${size}"></canvas>
+                    <div class="download-section">
+                        <button onclick="downloadIcon(${size})">Download icon-${size}x${size}.png</button>
+                    </div>
+                `;
+                
+                // Copy the generated canvas to the display canvas
+                const displayCanvas = div.querySelector('canvas');
+                const displayCtx = displayCanvas.getContext('2d');
+                displayCtx.drawImage(canvas, 0, 0);
+                
+                container.appendChild(div);
+            });
+        }
+
+        function downloadIcon(size) {
+            const canvas = createIcon(size);
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Generate icons on page load
+        window.onload = generateAllIcons;
+    </script>
+</body>
+</html>
