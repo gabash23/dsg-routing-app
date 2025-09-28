@@ -28,7 +28,7 @@ export default function OnboardingPage() {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Complete onboarding - mark as completed for this user
+      // Complete onboarding
       localStorage.setItem('dsg-onboarding-completed', 'true');
       router.push('/');
     }
@@ -41,7 +41,6 @@ export default function OnboardingPage() {
   };
 
   const handleSkip = () => {
-    // Mark onboarding as completed even when skipped
     localStorage.setItem('dsg-onboarding-completed', 'true');
     router.push('/');
   };
