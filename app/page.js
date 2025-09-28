@@ -42,7 +42,7 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-gray-900">
                 DSG Routing App
               </h1>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-700">
                 Shipment Management System
               </p>
             </div>
@@ -55,7 +55,7 @@ export default function Home() {
                     className="w-8 h-8 rounded-full"
                   />
                 )}
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-gray-700">
                   Welcome, {session.user?.name}
                 </span>
               </div>

@@ -390,7 +390,7 @@ export default function ReviewHandoff() {
                     name="sealVerification.sealNumber"
                     value={handoffData.sealVerification.sealNumber}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                       errors.sealNumber ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Enter seal number"
@@ -465,7 +465,7 @@ export default function ReviewHandoff() {
                     name="tmsVerification.tmsId"
                     value={handoffData.tmsVerification.tmsId}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                       errors.tmsId ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="CS..."
@@ -535,7 +535,7 @@ export default function ReviewHandoff() {
                     onChange={(e) =>
                       handlePhotoUpload('sealPhoto', e.target.files[0])
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                   />
                   {handoffData.photos.sealPhoto && (
                     <div className="mt-2">
@@ -557,7 +557,7 @@ export default function ReviewHandoff() {
                     onChange={(e) =>
                       handlePhotoUpload('bolPhoto', e.target.files[0])
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                   />
                   {handoffData.photos.bolPhoto && (
                     <div className="mt-2">
@@ -579,7 +579,7 @@ export default function ReviewHandoff() {
                     onChange={(e) =>
                       handlePhotoUpload('shipmentPhoto', e.target.files[0])
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                   />
                   {handoffData.photos.shipmentPhoto && (
                     <div className="mt-2">
@@ -623,7 +623,7 @@ export default function ReviewHandoff() {
                     name="driverInfo.name"
                     value={handoffData.driverInfo.name}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                       errors.driverName ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Enter driver name"
@@ -647,7 +647,7 @@ export default function ReviewHandoff() {
                     name="driverInfo.license"
                     value={handoffData.driverInfo.license}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                       errors.driverLicense
                         ? 'border-red-500'
                         : 'border-gray-300'
@@ -673,7 +673,7 @@ export default function ReviewHandoff() {
                     name="driverInfo.company"
                     value={handoffData.driverInfo.company}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                       errors.driverCompany
                         ? 'border-red-500'
                         : 'border-gray-300'
@@ -699,7 +699,7 @@ export default function ReviewHandoff() {
                     name="driverInfo.phone"
                     value={handoffData.driverInfo.phone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     placeholder="Enter driver phone"
                   />
                 </div>
@@ -717,7 +717,7 @@ export default function ReviewHandoff() {
                   value={handoffData.handoffNotes}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                   placeholder="Enter any additional notes for the handoff"
                 />
               </div>

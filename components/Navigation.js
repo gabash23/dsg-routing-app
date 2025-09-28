@@ -37,7 +37,7 @@ export default function Navigation({ currentView, onViewChange }) {
             >
               <div className="text-left">
                 <div className="font-semibold">{view.name}</div>
-                <div className="text-xs text-gray-400">{view.description}</div>
+                <div className="text-xs text-gray-600">{view.description}</div>
               </div>
             </button>
           ))}

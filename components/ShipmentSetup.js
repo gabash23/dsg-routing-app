@@ -278,7 +278,7 @@ export default function ShipmentSetup() {
                 name="poNumber"
                 value={formData.poNumber}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                   errors.poNumber ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Enter PO Number"
@@ -301,7 +301,7 @@ export default function ShipmentSetup() {
                 name="dcCode"
                 value={formData.dcCode}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                   errors.dcCode ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Enter DC Code"
@@ -327,7 +327,7 @@ export default function ShipmentSetup() {
                 name="departTime"
                 value={formData.departTime}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                   errors.departTime ? 'border-red-500' : 'border-gray-300'
                 }`}
               />
@@ -349,7 +349,7 @@ export default function ShipmentSetup() {
                 name="tmsId"
                 value={formData.tmsId}
                 onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                   errors.tmsId ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="CS..."
@@ -357,7 +357,7 @@ export default function ShipmentSetup() {
               {errors.tmsId && (
                 <p className="mt-1 text-sm text-red-600">{errors.tmsId}</p>
               )}
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-gray-600">
                 Must appear exactly as assigned for appointments/yard
                 access/invoicing
               </p>
@@ -378,10 +378,10 @@ export default function ShipmentSetup() {
               name="destination"
               value={formData.destination}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               placeholder="Enter destination address"
             />
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-gray-600">
               Combine POs to the same destination for efficiency
             </p>
           </div>
@@ -401,7 +401,7 @@ export default function ShipmentSetup() {
                 name="totalCartons"
                 value={formData.totalCartons}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="Enter total cartons"
               />
             </div>
@@ -418,7 +418,7 @@ export default function ShipmentSetup() {
                 name="totalWeight"
                 value={formData.totalWeight}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="Enter total weight"
               />
             </div>
@@ -459,7 +459,7 @@ export default function ShipmentSetup() {
                     {formatTimeRemaining(asnTimeRemaining)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-600">
                   ASN must be sent within 1 hour after shipment departure
                 </p>
               </div>

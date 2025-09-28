@@ -56,11 +56,11 @@ export default function CartonManagement() {
     const maxLength = 48; // inches
     const maxWidth = 30;
     const maxHeight = 30;
-    const maxWeight = 65; // lbs (up to 65 lb per DSG guide)
-    const minWeight = 1; // lbs
-    const minLength = 6; // inches
-    const minWidth = 4; // inches
-    const minHeight = 1; // inches
+    const maxWeight = 50; // lbs
+    const minWeight = 3; // lbs
+    const minLength = 9; // inches
+    const minWidth = 6; // inches
+    const minHeight = 3; // inches
 
     const warnings = [];
 
@@ -231,7 +231,7 @@ export default function CartonManagement() {
             {asnValid ? '✓ Valid 856 ASN' : '✗ Invalid ASN'}
           </span>
         </div>
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-gray-600 mt-1">
           UCC-128 (SSCC-18) labels require a valid 856 ASN to be generated
         </p>
       </div>
@@ -258,7 +258,7 @@ export default function CartonManagement() {
                 value={formData.cartonId}
                 onChange={handleInputChange}
                 disabled={!asnValid}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
                   errors.cartonId ? 'border-red-500' : 'border-gray-300'
                 } ${!asnValid ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                 placeholder="Enter carton ID"
@@ -280,7 +280,7 @@ export default function CartonManagement() {
                   value={formData.dimensions.length}
                   onChange={handleInputChange}
                   placeholder="Length"
-                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
                 <input
                   type="number"
@@ -288,7 +288,7 @@ export default function CartonManagement() {
                   value={formData.dimensions.width}
                   onChange={handleInputChange}
                   placeholder="Width"
-                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
                 <input
                   type="number"
@@ -296,7 +296,7 @@ export default function CartonManagement() {
                   value={formData.dimensions.height}
                   onChange={handleInputChange}
                   placeholder="Height"
-                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
               </div>
             </div>
@@ -314,7 +314,7 @@ export default function CartonManagement() {
                 name="weight"
                 value={formData.weight}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 placeholder="Enter weight"
               />
             </div>
@@ -348,15 +348,15 @@ export default function CartonManagement() {
                       : '⚠ Non-conveyable'}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 mb-2">
+                <p className="text-xs text-gray-600 mb-2">
                   {checkConveyability(
                     formData.dimensions.length,
                     formData.dimensions.width,
                     formData.dimensions.height,
                     formData.weight
                   ).isConveyable
-                    ? 'Placement: Right side, 2" from base and 2" from vertical edge'
-                    : 'Placement: End of carton (parallel or perpendicular OK)'}
+                    ? 'Placement: Right side, 2" from base and 2" from vertical edge (conveyable)'
+                    : 'Placement: End of carton (parallel or perpendicular OK) - non-conveyable'}
                 </p>
 
                 {/* Show warnings if any */}
@@ -390,7 +390,7 @@ export default function CartonManagement() {
               <div className="text-xs text-blue-800 space-y-1">
                 <p>• No straps on conveyable cartons</p>
                 <p>• Staples prohibited</p>
-                <p>• Minimum 32 ECT up to 65 lb</p>
+                <p>• Minimum 32 ECT up to 50 lb</p>
                 <p>• Use proper sealing tape</p>
               </div>
             </div>
@@ -438,7 +438,7 @@ export default function CartonManagement() {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Cartons</h2>
 
           {cartons.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">
+            <p className="text-gray-600 text-center py-8">
               No cartons created yet
             </p>
           ) : (
@@ -450,7 +450,7 @@ export default function CartonManagement() {
                       <h3 className="font-medium text-gray-900">
                         {carton.cartonId}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-600">
                         SSCC-18: {carton.sscc18}
                       </p>
                     </div>
@@ -539,18 +539,16 @@ export default function CartonManagement() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="font-medium text-gray-900 mb-2">
-              Conveyable Cartons (&le;48&quot;)
+              Conveyable Cartons (9-48&quot;L × 6-30&quot;W × 3-30&quot;H, 3-50
+              lb)
             </h3>
             <div className="border-2 border-gray-300 p-4 rounded-lg bg-gray-50">
-              <div className="relative w-32 h-24 mx-auto">
-                <div className="w-full h-full border-2 border-gray-400 rounded"></div>
-                <div className="absolute right-2 top-2 w-8 h-6 bg-blue-500 rounded text-white text-xs flex items-center justify-center">
-                  Label
-                </div>
-                <div className="absolute bottom-0 left-0 text-xs text-gray-600">
-                  <p>2" from base</p>
-                  <p>2" from edge</p>
-                </div>
+              <div className="flex justify-center">
+                <img
+                  src="/images/conveyable.png"
+                  alt="Conveyable carton label placement diagram"
+                  className="max-w-full h-auto"
+                />
               </div>
             </div>
             <p className="text-sm text-gray-600 mt-2">
@@ -560,18 +558,15 @@ export default function CartonManagement() {
           </div>
           <div>
             <h3 className="font-medium text-gray-900 mb-2">
-              Non-conveyable Cartons (&gt;48&quot;)
+              Non-conveyable Cartons (Outside conveyable range)
             </h3>
             <div className="border-2 border-gray-300 p-4 rounded-lg bg-gray-50">
-              <div className="relative w-40 h-16 mx-auto">
-                <div className="w-full h-full border-2 border-gray-400 rounded"></div>
-                <div className="absolute right-2 top-1 w-8 h-4 bg-orange-500 rounded text-white text-xs flex items-center justify-center">
-                  Label
-                </div>
-                <div className="absolute bottom-0 left-0 text-xs text-gray-600">
-                  <p>End placement</p>
-                  <p>Parallel or perpendicular OK</p>
-                </div>
+              <div className="flex justify-center">
+                <img
+                  src="/images/non-conveyable.png"
+                  alt="Non-conveyable carton label placement diagram"
+                  className="max-w-full h-auto"
+                />
               </div>
             </div>
             <p className="text-sm text-gray-600 mt-2">

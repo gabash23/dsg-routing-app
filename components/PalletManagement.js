@@ -274,7 +274,7 @@ export default function PalletManagement() {
           <div className="mb-4">
             <h3 className="font-medium text-gray-900 mb-2">Selected Cartons</h3>
             {currentPallet.cartons.length === 0 ? (
-              <p className="text-gray-500 text-sm">No cartons selected</p>
+              <p className="text-gray-600 text-sm">No cartons selected</p>
             ) : (
               <div className="space-y-2">
                 {currentPallet.cartons.map((carton) => (
@@ -556,7 +556,7 @@ export default function PalletManagement() {
                       : '⚠ Review Needed'}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-600">
                   Follow DSG routing guidelines for safe and efficient trailer
                   loading
                 </p>
@@ -573,7 +573,7 @@ export default function PalletManagement() {
         </h2>
 
         {pallets.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">
+          <p className="text-gray-600 text-center py-8">
             No pallets assembled yet
           </p>
         ) : (
@@ -590,7 +590,7 @@ export default function PalletManagement() {
                       {pallet.stats.totalWeight} lbs • {pallet.stats.maxHeight}"
                       height
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-600">
                       Assembled: {new Date(pallet.assembledAt).toLocaleString()}
                     </p>
                   </div>
