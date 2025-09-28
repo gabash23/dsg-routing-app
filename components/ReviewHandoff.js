@@ -49,6 +49,42 @@ export default function ReviewHandoff() {
   });
 
   const [errors, setErrors] = useState({});
+
+  // Validation functions
+  const validatePhone = (value) => {
+    const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneRegex.test(value)) {
+      return 'Please enter a valid phone number (e.g., 123-456-7890)';
+    }
+    return '';
+  };
+
+  const validateName = (value) => {
+    if (!value.trim()) {
+      return 'Name is required';
+    }
+    if (value.length < 2) {
+      return 'Name must be at least 2 characters';
+    }
+    return '';
+  };
+
+  const validateTMSId = (value) => {
+    if (!value.startsWith('CS')) {
+      return 'TMS ID must start with "CS"';
+    }
+    if (value.length < 3) {
+      return 'TMS ID must be at least 3 characters';
+    }
+    return '';
+  };
+
+  const validateRequired = (value, fieldName) => {
+    if (!value || value.toString().trim() === '') {
+      return `${fieldName} is required`;
+    }
+    return '';
+  };
   const [currentStage, setCurrentStage] = useState('bolCopies');
 
   // Calculate overall progress
@@ -91,13 +127,42 @@ export default function ReviewHandoff() {
       }));
     }
 
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
+    // Validate fields in real-time
+    let error = '';
+    if (name.includes('.')) {
+      const [section, field] = name.split('.');
+      if (section === 'driverInfo') {
+        switch (field) {
+          case 'name':
+            error = validateName(value);
+            break;
+          case 'phone':
+            error = validatePhone(value);
+            break;
+          case 'license':
+          case 'company':
+            error = validateRequired(value, field);
+            break;
+          default:
+            break;
+        }
+      } else if (section === 'tmsVerification' && field === 'tmsId') {
+        error = validateTMSId(value);
+      }
+    } else {
+      switch (name) {
+        case 'sealNumber':
+          error = validateRequired(value, 'Seal Number');
+          break;
+        default:
+          break;
+      }
     }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
 
   const handlePhotoUpload = (photoType, file) => {

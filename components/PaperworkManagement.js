@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import AddressSearch from './AddressSearch';
 
 export default function PaperworkManagement() {
   const [bolData, setBolData] = useState({
@@ -23,28 +24,114 @@ export default function PaperworkManagement() {
 
   const [errors, setErrors] = useState({});
 
+  // Validation functions
+  const validateNumeric = (value, fieldName, min = 0, max = Infinity) => {
+    const num = parseFloat(value);
+    if (isNaN(num) || num < min || num > max) {
+      return `${fieldName} must be a number between ${min} and ${max}`;
+    }
+    return '';
+  };
+
+  const validateTMSId = (value) => {
+    if (!value.startsWith('CS')) {
+      return 'TMS ID must start with "CS"';
+    }
+    if (value.length < 3) {
+      return 'TMS ID must be at least 3 characters';
+    }
+    return '';
+  };
+
+  const validateRequired = (value, fieldName) => {
+    if (!value || value.toString().trim() === '') {
+      return `${fieldName} is required`;
+    }
+    return '';
+  };
+
+  const validateAddress = (value) => {
+    if (!value.trim()) {
+      return 'Address is required';
+    }
+    if (value.length < 10) {
+      return 'Please enter a complete address';
+    }
+    return '';
+  };
+
+  const validatePhone = (value) => {
+    const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneRegex.test(value)) {
+      return 'Please enter a valid phone number';
+    }
+    return '';
+  };
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     if (name.startsWith('pos.')) {
-      const [posIndex, field] = name.split('.');
-      const index = parseInt(posIndex.split('[')[1].split(']')[0]);
+      const parts = name.split('.');
+      const index = parseInt(parts[1]);
+      const field = parts[2];
       setBolData((prev) => ({
         ...prev,
         pos: prev.pos.map((po, i) =>
           i === index ? { ...po, [field]: value } : po
         ),
       }));
+
+      // Validate PO fields
+      let error = '';
+      if (field === 'cartonsPerPO') {
+        error = validateNumeric(value, 'Cartons per PO', 1, 1000);
+      } else if (field === 'poNumber') {
+        error = validateRequired(value, 'PO Number');
+      }
+      setErrors((prev) => ({ ...prev, [name]: error }));
     } else {
       setBolData((prev) => ({
         ...prev,
         [name]: type === 'checkbox' ? checked : value,
       }));
-    }
 
-    // Clear errors when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+      // Validate other fields
+      let error = '';
+      switch (name) {
+        case 'carrierFullName':
+        case 'vendorName':
+        case 'vendorNumber':
+        case 'bolNumber':
+        case 'description':
+        case 'nmfcClass':
+        case 'sealNumber':
+          error = validateRequired(
+            value,
+            name.replace(/([A-Z])/g, ' $1').toLowerCase()
+          );
+          break;
+        case 'shipTo':
+        case 'billTo':
+          error = validateAddress(value);
+          break;
+        case 'totalCartons':
+          error = validateNumeric(value, 'Total Cartons', 1, 1000);
+          break;
+        case 'totalPallets':
+          error = validateNumeric(value, 'Total Pallets', 1, 100);
+          break;
+        case 'totalWeight':
+          error = validateNumeric(value, 'Total Weight', 0.1, 50000);
+          break;
+        case 'tmsShipmentId':
+          error = validateTMSId(value);
+          break;
+        default:
+          break;
+      }
+
+      setErrors((prev) => ({ ...prev, [name]: error }));
     }
   };
 
@@ -323,49 +410,37 @@ export default function PaperworkManagement() {
               </div>
 
               <div>
-                <label
-                  htmlFor="shipTo"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Ship-To Address *
-                </label>
-                <textarea
-                  id="shipTo"
-                  name="shipTo"
+                <AddressSearch
                   value={bolData.shipTo}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
-                    errors.shipTo ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  onChange={(value) => {
+                    setBolData((prev) => ({ ...prev, shipTo: value }));
+                    // Clear error when user starts typing
+                    if (errors.shipTo) {
+                      setErrors((prev) => ({ ...prev, shipTo: '' }));
+                    }
+                  }}
                   placeholder="Enter ship-to address"
+                  error={errors.shipTo}
+                  label="Ship-To Address"
+                  required={true}
                 />
-                {errors.shipTo && (
-                  <p className="mt-1 text-sm text-red-600">{errors.shipTo}</p>
-                )}
               </div>
 
               <div>
-                <label
-                  htmlFor="billTo"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Bill-To Address (3rd Party) *
-                </label>
-                <textarea
-                  id="billTo"
-                  name="billTo"
+                <AddressSearch
                   value={bolData.billTo}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 ${
-                    errors.billTo ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  onChange={(value) => {
+                    setBolData((prev) => ({ ...prev, billTo: value }));
+                    // Clear error when user starts typing
+                    if (errors.billTo) {
+                      setErrors((prev) => ({ ...prev, billTo: '' }));
+                    }
+                  }}
                   placeholder="Enter bill-to address"
+                  error={errors.billTo}
+                  label="Bill-To Address (3rd Party)"
+                  required={true}
                 />
-                {errors.billTo && (
-                  <p className="mt-1 text-sm text-red-600">{errors.billTo}</p>
-                )}
               </div>
             </div>
 

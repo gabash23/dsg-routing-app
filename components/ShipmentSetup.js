@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import AddressSearch from './AddressSearch';
 
 export default function ShipmentSetup() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,54 @@ export default function ShipmentSetup() {
   const [asnTimer, setAsnTimer] = useState(null);
   const [asnTimeRemaining, setAsnTimeRemaining] = useState(null);
   const [errors, setErrors] = useState({});
+
+  // Validation functions
+  const validateNumeric = (value, fieldName, min = 0, max = Infinity) => {
+    const num = parseFloat(value);
+    if (isNaN(num) || num < min || num > max) {
+      return `${fieldName} must be a number between ${min} and ${max}`;
+    }
+    return '';
+  };
+
+  const validateTMSId = (value) => {
+    if (!value.startsWith('CS')) {
+      return 'TMS ID must start with "CS"';
+    }
+    if (value.length < 3) {
+      return 'TMS ID must be at least 3 characters';
+    }
+    return '';
+  };
+
+  const validateDepartTime = (value) => {
+    const departTime = new Date(value);
+    const now = new Date();
+    if (departTime <= now) {
+      return 'Depart time must be in the future';
+    }
+    return '';
+  };
+
+  const validatePO = (value) => {
+    if (!value.trim()) {
+      return 'PO Number is required';
+    }
+    if (value.length < 3) {
+      return 'PO Number must be at least 3 characters';
+    }
+    return '';
+  };
+
+  const validateAddress = (value) => {
+    if (!value.trim()) {
+      return 'Address is required';
+    }
+    if (value.length < 10) {
+      return 'Please enter a complete address';
+    }
+    return '';
+  };
 
   // ASN Timer Logic - 1 hour requirement
   useEffect(() => {
@@ -60,13 +109,35 @@ export default function ShipmentSetup() {
       [name]: value,
     }));
 
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
+    // Validate input in real-time
+    let error = '';
+    switch (name) {
+      case 'poNumber':
+        error = validatePO(value);
+        break;
+      case 'tmsId':
+        error = validateTMSId(value);
+        break;
+      case 'departTime':
+        error = validateDepartTime(value);
+        break;
+      case 'destination':
+        error = validateAddress(value);
+        break;
+      case 'totalCartons':
+        error = validateNumeric(value, 'Total Cartons', 1, 1000);
+        break;
+      case 'totalWeight':
+        error = validateNumeric(value, 'Total Weight', 0.1, 50000);
+        break;
+      default:
+        break;
     }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
 
   const handleSendASN = () => {
@@ -366,20 +437,19 @@ export default function ShipmentSetup() {
 
           {/* Destination */}
           <div>
-            <label
-              htmlFor="destination"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Destination
-            </label>
-            <input
-              type="text"
-              id="destination"
-              name="destination"
+            <AddressSearch
               value={formData.destination}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              onChange={(value) => {
+                setFormData((prev) => ({ ...prev, destination: value }));
+                // Clear error when user starts typing
+                if (errors.destination) {
+                  setErrors((prev) => ({ ...prev, destination: '' }));
+                }
+              }}
               placeholder="Enter destination address"
+              error={errors.destination}
+              label="Destination"
+              required={true}
             />
             <p className="mt-1 text-xs text-gray-600">
               Combine POs to the same destination for efficiency

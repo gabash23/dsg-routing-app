@@ -16,6 +16,45 @@ export default function CartonManagement() {
     placementAttestation: false,
   });
   const [errors, setErrors] = useState({});
+
+  // Validation functions
+  const validateNumeric = (value, fieldName, min = 0, max = Infinity) => {
+    const num = parseFloat(value);
+    if (isNaN(num) || num < min || num > max) {
+      return `${fieldName} must be a number between ${min} and ${max}`;
+    }
+    return '';
+  };
+
+  const validateCartonId = (value) => {
+    if (!value.trim()) {
+      return 'Carton ID is required';
+    }
+    if (value.length < 3) {
+      return 'Carton ID must be at least 3 characters';
+    }
+    return '';
+  };
+
+  const validateDimensions = (length, width, height) => {
+    const lengthNum = parseFloat(length);
+    const widthNum = parseFloat(width);
+    const heightNum = parseFloat(height);
+
+    if (isNaN(lengthNum) || lengthNum <= 0) {
+      return 'Length must be a positive number';
+    }
+    if (isNaN(widthNum) || widthNum <= 0) {
+      return 'Width must be a positive number';
+    }
+    if (isNaN(heightNum) || heightNum <= 0) {
+      return 'Height must be a positive number';
+    }
+    if (lengthNum > 100 || widthNum > 100 || heightNum > 100) {
+      return 'Dimensions cannot exceed 100 inches';
+    }
+    return '';
+  };
   const [asnValid, setAsnValid] = useState(false);
   const [selectedCarton, setSelectedCarton] = useState(null);
 
@@ -109,18 +148,43 @@ export default function CartonManagement() {
           [dimension]: value,
         },
       }));
+
+      // Validate dimensions
+      const newDimensions = {
+        ...formData.dimensions,
+        [dimension]: value,
+      };
+      const dimensionError = validateDimensions(
+        newDimensions.length,
+        newDimensions.width,
+        newDimensions.height
+      );
+      setErrors((prev) => ({
+        ...prev,
+        [`dimensions.${dimension}`]: dimensionError,
+      }));
     } else {
       setFormData((prev) => ({
         ...prev,
         [name]: type === 'checkbox' ? checked : value,
       }));
-    }
 
-    // Clear errors when user starts typing
-    if (errors[name]) {
+      // Validate other fields
+      let error = '';
+      switch (name) {
+        case 'cartonId':
+          error = validateCartonId(value);
+          break;
+        case 'weight':
+          error = validateNumeric(value, 'Weight', 0.1, 200);
+          break;
+        default:
+          break;
+      }
+
       setErrors((prev) => ({
         ...prev,
-        [name]: '',
+        [name]: error,
       }));
     }
   };
