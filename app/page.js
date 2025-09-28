@@ -41,7 +41,7 @@ export default function Home() {
     }
   };
 
-  // Redirect to onboarding when user is authenticated
+  // Redirect to onboarding when user is authenticated (first time only)
   useEffect(() => {
     if (status === 'authenticated' && session && !onboardingLoaded) {
       const hasCompletedOnboarding = localStorage.getItem(
@@ -55,6 +55,8 @@ export default function Home() {
   }, [status, session, onboardingLoaded, router]);
 
   const resetOnboarding = () => {
+    // Clear the completion flag to allow onboarding to show again
+    localStorage.removeItem('dsg-onboarding-completed');
     router.push('/onboarding');
   };
 
